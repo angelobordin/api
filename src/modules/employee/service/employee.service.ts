@@ -1,7 +1,8 @@
 import { Injectable } from '@nestjs/common';
-import { EmployeeMarkBodyDto } from '../dto/register-employee-mark.dto';
+import { RegisterEmployeeMarkBodyDto } from '../dto/register-employee-mark-body.dto';
 import { PrismaService } from 'prisma/prisma.service';
 import { EmployeeRepository } from '../repository/employee.repository';
+import { UpdateEmployeeMarkBodyDto } from '../dto/update-employee-mark-body.dto';
 
 @Injectable()
 export class EmployeeService {
@@ -10,7 +11,7 @@ export class EmployeeService {
 		private repository: EmployeeRepository,
 	) {}
 
-	async registerEmployeeMark(employeeName: string, markData: EmployeeMarkBodyDto) {
+	async registerEmployeeMark(employeeName: string, markData: RegisterEmployeeMarkBodyDto) {
 		try {
 			const result = await this.repository.registerEmployeeMark(this.prisma, employeeName, markData);
 
@@ -45,6 +46,20 @@ export class EmployeeService {
 			return {
 				status: 200,
 				message: '',
+				data: result,
+			};
+		} catch (error) {
+			throw error;
+		}
+	}
+
+	async updateMark(newData: UpdateEmployeeMarkBodyDto, markId: string) {
+		try {
+			const result = await this.repository.updateMark(this.prisma, newData, markId);
+
+			return {
+				status: 200,
+				message: 'Registro atualizado com sucesso!',
 				data: result,
 			};
 		} catch (error) {

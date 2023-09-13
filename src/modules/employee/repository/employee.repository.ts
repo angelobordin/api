@@ -1,10 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'prisma/prisma.service';
-import { EmployeeMarkBodyDto } from '../dto/register-employee-mark.dto';
+import { RegisterEmployeeMarkBodyDto } from '../dto/register-employee-mark-body.dto';
+import { UpdateEmployeeMarkBodyDto } from '../dto/update-employee-mark-body.dto';
 
 @Injectable()
 export class EmployeeRepository {
-	async registerEmployeeMark(prisma: PrismaService, employeeName: string, markData: EmployeeMarkBodyDto) {
+	async registerEmployeeMark(prisma: PrismaService, employeeName: string, markData: RegisterEmployeeMarkBodyDto) {
 		try {
 			const result = await prisma.mark.create({
 				data: {
@@ -48,6 +49,23 @@ export class EmployeeRepository {
 			});
 
 			return result;
+		} catch (error) {
+			throw error;
+		}
+	}
+
+	async updateMark(prisma: PrismaService, newData: UpdateEmployeeMarkBodyDto, markId: string) {
+		try {
+			const result = await prisma.mark.update({
+				where: { id: parseInt(markId) },
+				data: {
+					name: newData.name,
+					cpf: newData.cpf,
+					email: newData.email,
+					cellphone: newData.cellphone,
+					validate: newData.validate,
+				},
+			});
 		} catch (error) {
 			throw error;
 		}

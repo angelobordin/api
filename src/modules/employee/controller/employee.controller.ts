@@ -1,6 +1,8 @@
-import { Controller, Post, Param, Body, Get } from '@nestjs/common';
-import { EmployeeMarkBodyDto, EmployeeMarkParamsDTo } from '../dto/register-employee-mark.dto';
+import { Controller, Post, Param, Body, Get, Put } from '@nestjs/common';
+import { RegisterEmployeeMarkBodyDto } from '../dto/register-employee-mark-body.dto';
 import { EmployeeService } from '../service/employee.service';
+import { EmployeeMarkParamsDto } from '../dto/employee-mark-param.dto';
+import { UpdateEmployeeMarkBodyDto } from '../dto/update-employee-mark-body.dto';
 
 @Controller()
 export class EmployeeController {
@@ -18,7 +20,7 @@ export class EmployeeController {
 	}
 
 	@Get('/:name/validar')
-	async getMarkById(@Body() body: { id: string }) {
+	async getMarkById(@Body() body: EmployeeMarkParamsDto) {
 		try {
 			const markId = body.id;
 			const result = await this.service.getMarkById(markId);
@@ -29,8 +31,21 @@ export class EmployeeController {
 		}
 	}
 
+	@Put('/:id')
+	async updateMark(@Param() params: EmployeeMarkParamsDto, @Body() body: UpdateEmployeeMarkBodyDto) {
+		try {
+			const markId = params.id;
+			const newData = body;
+			const result = await this.service.updateMark(newData, markId);
+
+			return result;
+		} catch (error) {
+			return error;
+		}
+	}
+
 	@Post('/:name/registrar')
-	async registerEmployeeMark(@Param() params: EmployeeMarkParamsDTo, @Body() body: EmployeeMarkBodyDto) {
+	async registerEmployeeMark(@Param() params: EmployeeMarkParamsDto, @Body() body: RegisterEmployeeMarkBodyDto) {
 		try {
 			const markData = body;
 			const employeeName = params.name;
