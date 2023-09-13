@@ -14,7 +14,7 @@ model user {
   id             Int              @id @default(autoincrement())
   name           String           @db.VarChar(100)
   email          String           @db.VarChar(100)
-  cpf            String           @db.VarChar(11)
+  cpf            String           @unique @db.VarChar(11)
   createdAt      DateTime         @default(now()) @db.Timestamp(0)
   updatedAt      DateTime         @default(now()) @db.Timestamp(0)
   user_knowledge user_knowledge[]
