@@ -1,4 +1,3 @@
-src / modules / user / controller / user.controller.ts;
 import { Body, Controller, Post } from '@nestjs/common';
 import { UserService } from '../service/user.service';
 import { CreateUserDto } from '../dto/create-user.dto';

@@ -18,4 +18,16 @@ export class UserRepository {
 			throw error;
 		}
 	}
+
+	async getUserByCpf(prisma: PrismaService, cpf: string) {
+		try {
+			const user = await prisma.user.findUnique({
+				where: { cpf },
+			});
+
+			return user;
+		} catch (error) {
+			throw error;
+		}
+	}
 }
