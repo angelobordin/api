@@ -9,7 +9,6 @@ export class UserRepository {
 			const result = await prisma.user.create({
 				data: {
 					name: newUser.name,
-					email: newUser.email,
 					cpf: newUser.cpf,
 				},
 			});
