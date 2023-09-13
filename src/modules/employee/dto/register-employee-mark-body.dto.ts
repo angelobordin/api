@@ -1,13 +1,7 @@
 import { IsArray, IsEmail, IsNotEmpty, IsString, MaxLength, MinLength } from 'class-validator';
 import { Knowledge } from 'src/util/interface/knowledge';
 
-export class EmployeeMarkParamsDTo {
-	@IsString()
-	@IsNotEmpty()
-	name: string;
-}
-
-export class EmployeeMarkBodyDto {
+export class RegisterEmployeeMarkBodyDto {
 	@IsString()
 	@IsNotEmpty({ message: `O campo NOME está ausente!` })
 	@MaxLength(100, { message: `O campo NOME deve ter no máximo 100 caracteres!` })
