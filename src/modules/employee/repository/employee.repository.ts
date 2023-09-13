@@ -25,4 +25,31 @@ export class EmployeeRepository {
 			throw error;
 		}
 	}
+
+	async getMarkList(prisma: PrismaService) {
+		try {
+			// Busca todos os registros e ordena por ordem Crescente (Alfabética)
+			const result = await prisma.mark.findMany({
+				orderBy: {
+					name: 'asc',
+				},
+			});
+
+			return result;
+		} catch (error) {
+			throw error;
+		}
+	}
+
+	async getMarkById(prisma: PrismaService, markId: string) {
+		try {
+			const result = await prisma.mark.findFirst({
+				where: { id: parseInt(markId) },
+			});
+
+			return result;
+		} catch (error) {
+			throw error;
+		}
+	}
 }
