@@ -11,20 +11,31 @@ datasource db {
 }
 
 model user {
-  id             Int              @id @default(autoincrement())
-  name           String           @db.VarChar(100)
-  email          String           @db.VarChar(100)
-  cpf            String           @unique @db.VarChar(11)
-  createdAt      DateTime         @default(now()) @db.Timestamp(0)
-  updatedAt      DateTime         @default(now()) @db.Timestamp(0)
-  user_knowledge user_knowledge[]
+  id        Int      @id @default(autoincrement())
+  name      String   @db.VarChar(100)
+  cpf       String   @unique @db.VarChar(11)
+  createdAt DateTime @default(now()) @db.Timestamp(0)
+  updatedAt DateTime @default(now()) @db.Timestamp(0)
 }
 
-model user_knowledge {
+model mark {
+  id        Int      @id @default(autoincrement())
+  name      String   @db.VarChar(100)
+  email     String   @db.VarChar(100)
+  cpf       String   @db.VarChar(11)
+  cellphone String?  @db.VarChar(11)
+  createdAt DateTime @default(now()) @db.Timestamp(0)
+  updatedAt DateTime @default(now()) @db.Timestamp(0)
+  validate  Boolean  @default(false)
+
+  mark_knowledge mark_knowledge[]
+}
+
+model mark_knowledge {
   id          Int       @id @default(autoincrement())
-  userId      Int
+  markId      Int
   knowledgeId Int
-  user        user      @relation(fields: [userId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  mark        mark      @relation(fields: [markId], references: [id], onDelete: NoAction, onUpdate: NoAction)
   knowledge   knowledge @relation(fields: [knowledgeId], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }
 
@@ -33,5 +44,5 @@ model knowledge {
   name           String
   createdAt      DateTime         @default(now()) @db.Timestamp(0)
   updatedAt      DateTime         @default(now()) @db.Timestamp(0)
-  user_knowledge user_knowledge[]
+  mark_knowledge mark_knowledge[]
 }
