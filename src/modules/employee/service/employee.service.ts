@@ -23,4 +23,32 @@ export class EmployeeService {
 			throw error;
 		}
 	}
+
+	async getMarkList() {
+		try {
+			const result = await this.repository.getMarkList(this.prisma);
+
+			return {
+				status: 200,
+				message: '',
+				data: result,
+			};
+		} catch (error) {
+			throw error;
+		}
+	}
+
+	async getMarkById(markId: string) {
+		try {
+			const result = await this.repository.getMarkById(this.prisma, markId);
+
+			return {
+				status: 200,
+				message: '',
+				data: result,
+			};
+		} catch (error) {
+			throw error;
+		}
+	}
 }
