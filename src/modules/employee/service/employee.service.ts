@@ -39,9 +39,9 @@ export class EmployeeService {
 		}
 	}
 
-	async getMarkById(markId: string) {
+	async getMark(markName: string) {
 		try {
-			const result = await this.repository.getMarkById(this.prisma, markId);
+			const result = await this.repository.getMark(this.prisma, markName);
 
 			return {
 				status: 200,
