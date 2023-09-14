@@ -42,10 +42,17 @@ export class EmployeeRepository {
 		}
 	}
 
-	async getMarkById(prisma: PrismaService, markId: string) {
+	async getMark(prisma: PrismaService, markName: string) {
 		try {
 			const result = await prisma.mark.findFirst({
-				where: { id: parseInt(markId) },
+				where: {
+					name: {
+						equals: markName,
+					},
+				},
+				include: {
+					mark_knowledge: true,
+				},
 			});
 
 			return result;
@@ -59,10 +66,6 @@ export class EmployeeRepository {
 			const result = await prisma.mark.update({
 				where: { id: parseInt(markId) },
 				data: {
-					name: newData.name,
-					cpf: newData.cpf,
-					email: newData.email,
-					cellphone: newData.cellphone,
 					validate: newData.validate,
 				},
 			});
