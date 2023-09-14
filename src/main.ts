@@ -5,13 +5,13 @@ import { useContainer } from 'class-validator';
 
 async function bootstrap() {
 	const app = await NestFactory.create(AppModule);
+	app.enableCors();
 
 	// Código para usar as validações de dados de entradas nos DTO corretamente;
 	app.useGlobalPipes(
 		new ValidationPipe({
 			transform: true,
-			whitelist: true,
-			forbidNonWhitelisted: true,
+			skipUndefinedProperties: true,
 		}),
 	);
 
