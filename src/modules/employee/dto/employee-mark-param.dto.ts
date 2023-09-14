@@ -1,11 +1,9 @@
 import { IsNotEmpty, IsString } from 'class-validator';
 
-export class EmployeeMarkParamsDto {
-	@IsNotEmpty()
-	@IsString()
+export class EmployeeMarkIdDto {
 	id?: string;
+}
 
-	@IsString()
-	@IsNotEmpty()
-	name?: string;
+export class EmployeeMarkNameDto {
+	name: string;
 }
