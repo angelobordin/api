@@ -1,7 +1,7 @@
 import { Controller, Post, Param, Body, Get, Put } from '@nestjs/common';
 import { RegisterEmployeeMarkBodyDto } from '../dto/register-employee-mark-body.dto';
 import { EmployeeService } from '../service/employee.service';
-import { EmployeeMarkParamsDto } from '../dto/employee-mark-param.dto';
+import { EmployeeMarkIdDto, EmployeeMarkNameDto } from '../dto/employee-mark-param.dto';
 import { UpdateEmployeeMarkBodyDto } from '../dto/update-employee-mark-body.dto';
 
 @Controller()
@@ -19,11 +19,11 @@ export class EmployeeController {
 		}
 	}
 
-	@Get('/:name/validar')
-	async getMarkById(@Body() body: EmployeeMarkParamsDto) {
+	@Get('/:name')
+	async getMark(@Param() params: EmployeeMarkNameDto) {
 		try {
-			const markId = body.id;
-			const result = await this.service.getMarkById(markId);
+			const markName = params.name;
+			const result = await this.service.getMark(markName);
 
 			return result;
 		} catch (error) {
@@ -32,7 +32,7 @@ export class EmployeeController {
 	}
 
 	@Put('/:id')
-	async updateMark(@Param() params: EmployeeMarkParamsDto, @Body() body: UpdateEmployeeMarkBodyDto) {
+	async updateMark(@Param() params: EmployeeMarkIdDto, @Body() body: UpdateEmployeeMarkBodyDto) {
 		try {
 			const markId = params.id;
 			const newData = body;
@@ -45,7 +45,7 @@ export class EmployeeController {
 	}
 
 	@Post('/:name/registrar')
-	async registerEmployeeMark(@Param() params: EmployeeMarkParamsDto, @Body() body: RegisterEmployeeMarkBodyDto) {
+	async registerEmployeeMark(@Param() params: EmployeeMarkNameDto, @Body() body: RegisterEmployeeMarkBodyDto) {
 		try {
 			const markData = body;
 			const employeeName = params.name;

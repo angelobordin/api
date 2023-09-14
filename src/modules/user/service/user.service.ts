@@ -12,14 +12,9 @@ export class UserService {
 
 	async registerUser(newUser: CreateUserDto) {
 		try {
-			const result = await this.repository.registerUser(
-				this.prisma,
-				newUser,
-			);
+			const result = await this.repository.registerUser(this.prisma, newUser);
 
-			const linkUser = `http://localhost:3000/${result.name
-				.toLowerCase()
-				.replaceAll(' ', '-')}/registrar`;
+			const linkUser = `http://localhost:4200/${result.name.toLowerCase().replaceAll(' ', '-')}/registrar`;
 
 			return {
 				status: 200,
