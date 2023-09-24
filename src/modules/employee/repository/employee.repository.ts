@@ -13,7 +13,7 @@ export class EmployeeRepository {
 					email: markData.email,
 					cpf: markData.cpf,
 					cellphone: markData.cellphone,
-					mark_knowledge: {
+					knowledge: {
 						createMany: {
 							data: markData.knowledge,
 						},
@@ -42,16 +42,14 @@ export class EmployeeRepository {
 		}
 	}
 
-	async getMark(prisma: PrismaService, markName: string) {
+	async getMark(prisma: PrismaService, markName: string, markId: number) {
 		try {
 			const result = await prisma.mark.findFirst({
 				where: {
-					name: {
-						equals: markName,
-					},
+					id: markId,
 				},
 				include: {
-					mark_knowledge: true,
+					knowledge: true,
 				},
 			});
 
@@ -61,14 +59,16 @@ export class EmployeeRepository {
 		}
 	}
 
-	async updateMark(prisma: PrismaService, newData: UpdateEmployeeMarkBodyDto, markId: string) {
+	async updateMark(prisma: PrismaService, newData: UpdateEmployeeMarkBodyDto, markId: number) {
 		try {
 			const result = await prisma.mark.update({
-				where: { id: parseInt(markId) },
+				where: { id: markId },
 				data: {
 					validate: newData.validate,
 				},
 			});
+
+			return result;
 		} catch (error) {
 			throw error;
 		}

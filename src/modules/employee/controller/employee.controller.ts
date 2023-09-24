@@ -19,24 +19,12 @@ export class EmployeeController {
 		}
 	}
 
-	@Get('/:name')
-	async getMark(@Param() params: EmployeeMarkNameDto) {
-		try {
-			const markName = params.name;
-			const result = await this.service.getMark(markName);
-
-			return result;
-		} catch (error) {
-			return error;
-		}
-	}
-
 	@Put('/:id')
 	async updateMark(@Param() params: EmployeeMarkIdDto, @Body() body: UpdateEmployeeMarkBodyDto) {
 		try {
 			const markId = params.id;
 			const newData = body;
-			const result = await this.service.updateMark(newData, markId);
+			const result = await this.service.updateMark(newData, parseInt(markId));
 
 			return result;
 		} catch (error) {
@@ -50,6 +38,19 @@ export class EmployeeController {
 			const markData = body;
 			const employeeName = params.name;
 			const result = await this.service.registerEmployeeMark(employeeName, markData);
+
+			return result;
+		} catch (error) {
+			return error;
+		}
+	}
+
+	@Post('/:name')
+	async getMark(@Param() params: EmployeeMarkNameDto, @Body() body: EmployeeMarkIdDto) {
+		try {
+			const markID = body.id;
+			const markName = params.name;
+			const result = await this.service.getMark(markName, parseInt(markID));
 
 			return result;
 		} catch (error) {

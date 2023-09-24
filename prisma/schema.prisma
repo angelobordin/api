@@ -28,7 +28,7 @@ model mark {
   updatedAt DateTime @default(now()) @db.Timestamp(0)
   validate  Boolean  @default(false)
 
-  mark_knowledge mark_knowledge[]
+  knowledge mark_knowledge[]
 }
 
 model mark_knowledge {
